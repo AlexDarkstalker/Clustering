@@ -45,9 +45,30 @@ public class LWSolution {
             this.currentIter = new LWClusteringIteration(this.clustersList);
             this.currentIter.runIter();
             this.iterationsList.add(this.currentIter);
+            this.logToFile();
 
         }
     }
+
+    private void logToFile() {
+        for(int i = 0; i < this.iterationsList.size(); i++)
+            logIter(this.iterationsList.get(i), i);
+
+    }
+
+    private void logIter(Iteration iter, int i) {
+        log.print("[Iteration #" + i + "]{\n\t");
+        for(int j = 0; j < iter.getClustersList().size(); j++)
+            logCluster(iter.getClustersList().get(j), j);
+        log.print("}");
+    }
+
+    private void logCluster(Cluster cluster, int j) {
+        log.print("[Cluster#" + j + "]{\n\t");
+        log.print(cluster.toString());
+        log.print("}");
+    }
+
 
     private void initializeStartSolution(LinkedList<Cluster> curIterClusters) {
         for(Point p: this.points) {

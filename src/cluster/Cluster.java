@@ -50,8 +50,7 @@ public class Cluster {
 
     @Override
     public String toString() {
-        return "Cluster{" +
-                "points=" + points +
+        return "points=" + points +
                 ", distances=" + distances +
                 '}' + '\n';
     }
