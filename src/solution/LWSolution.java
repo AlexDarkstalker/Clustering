@@ -1,6 +1,7 @@
 package solution;
 
 import cluster.Cluster;
+import iteration.Iteration;
 import iteration.LWClusteringIteration;
 import metric.Metric;
 import problem.Point;
@@ -15,8 +16,9 @@ public class LWSolution {
     private Cluster[] clusters;
     private Metric metric;
     private double[][] clusterDistances;
-    private LWClusteringIteration currentIter;
+    private Iteration currentIter;
     private LinkedList<Cluster> clustersList;
+    private ArrayList<Iteration> iterationsList;
 
 
     public Cluster[] getClusters() {
@@ -37,8 +39,14 @@ public class LWSolution {
     private void solve() {
         this.clustersList = new LinkedList<>();
         initializeStartSolution(this.clustersList);
-//        for(int i = 0; i < this.points.length; i++)
-//            runIteration(curIterClusters);
+        this.iterationsList = new ArrayList<>();
+        for(int i = 0; i < this.points.length; i++)
+        {
+            this.currentIter = new LWClusteringIteration(this.clustersList);
+            this.currentIter.runIter();
+            this.iterationsList.add(this.currentIter);
+
+        }
     }
 
     private void initializeStartSolution(LinkedList<Cluster> curIterClusters) {
@@ -61,11 +69,11 @@ public class LWSolution {
 
 
 
-    private void runIteration(ArrayList<Cluster> curIterClusters, LWClusteringIteration currentIter) {
-        LWClusteringIteration curIter = new LWClusteringIteration(this.clustersList);
-        for(int i = 0; i < this.clustersList.size(); i++) {
-            curIter.getMinDistance(this.clustersList.get(i).getDistances().toArray(new double[] ));
-        }
-
-    }
+//    private void runIteration(ArrayList<Cluster> curIterClusters, LWClusteringIteration currentIter) {
+//        LWClusteringIteration curIter = new LWClusteringIteration(this.clustersList);
+//        for(int i = 0; i < this.clustersList.size(); i++) {
+//            curIter.getMinDistance(this.clustersList.get(i).getDistances().toArray(new double[] ));
+//        }
+//
+//    }
 }

@@ -7,7 +7,7 @@ import cluster.LWClusterDistance;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class LWClusteringIteration {
+public class LWClusteringIteration implements Iteration{
     private ClustersDistance clustersDistance;
     private LinkedList<Cluster> clustersList;
     private double[] minDistances;
@@ -30,9 +30,22 @@ public class LWClusteringIteration {
     }
 
     public void runIter() {
-        recalcClusterDistance();
+        this.recalcClusterDistance();
         this.clustersList.get(num1).addPoints(this.clustersList.get(num2).getPoints());
-        this
+        //this.recalcClusterDistance();
+        this.recalcDistanceToCluster();
+        this.kickElem(num2);
+        this.nullDistanceToCluster(num2);
+    }
+
+    private void nullDistanceToCluster(int num2) {
+        for(Cluster cluster: this.clustersList)
+            cluster.setDistance(num2, 0.);
+    }
+
+    private void recalcDistanceToCluster() {
+        for(int i = 0; i < this.clustersList.size(); i++)
+            this.getClustersList().get(i).getDistances().set(num1, this.clustersList.get(num1).getDistances().get(i));
     }
 
     private void recalcClusterDistance() {
