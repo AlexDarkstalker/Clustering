@@ -8,7 +8,7 @@ import java.io.PrintStream;
 public class RunClusteringGA {
     public static void main(String[] args) {
         try {
-            Problem clusterProblem = new Problem("/home/alex/диплом/a0.txt", new PrintStream("log.txt"));
+            Problem clusterProblem = new Problem("a0.txt", new PrintStream("log.txt"));
 
         } catch (IOException e) {
             e.getMessage();

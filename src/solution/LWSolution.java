@@ -83,7 +83,7 @@ public class LWSolution {
                 clusterDistances[j][i] = clusterDistances[i][j];
             }
         for(int i = 0; i < this.clustersList.size(); i++)
-            curIterClusters.get(i).setDistances(this.clusterDistances[i]);
+            curIterClusters.get(i).setDistances(this.clusterDistances[i], i);
 
 
     }

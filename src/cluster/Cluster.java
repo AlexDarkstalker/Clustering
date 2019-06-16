@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Cluster {
+    private int numCluster;
+
     private double minDist;
 
     private int minDistClustNum;
@@ -16,9 +18,10 @@ public class Cluster {
 
     private LinkedList <Double> distances;
 
-    public void setDistances(double[] distances) {
+    public void setDistances(double[] distances, int j) {
+        this.numCluster = j;
         this.distances = new LinkedList<>();
-        for(int i = 1;  i< distances.length; i++)
+        for(int i = 0;  i< distances.length; i++)
             this.distances.add(distances[i]);
         this.setMinDist();
 
@@ -68,15 +71,23 @@ public class Cluster {
     }
 
     private void setMinDist() {
-        int i = 0;
+//        int i = 0;
         int numMinDist = -1;
         double minDist = Double.MAX_VALUE;
-        while (i < this.distances.size()) {
+//        while (i < this.distances.size()) {
+//            if(this.distances.get(i) < minDist) {
+//                minDist = this.distances.get(i);
+//                numMinDist = i;
+//            }
+//            i++;
+//        }
+        for(int i = 0; i < this.distances.size(); i++) {
+            if(i == this.numCluster)
+                continue;
             if(this.distances.get(i) < minDist) {
                 minDist = this.distances.get(i);
                 numMinDist = i;
             }
-            i++;
         }
         this.minDistClustNum = numMinDist;
         this.minDist = minDist;

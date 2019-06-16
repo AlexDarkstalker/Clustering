@@ -22,14 +22,17 @@ public class LWClusteringIteration implements Iteration{
         ArrayList<Double> minDists = new ArrayList<>();
         for(int i = 0; i < clustersList.size(); i++)
             minDists.add(clustersList.get(i).getMinDist());
-        minDists.toArray(dists);
+        dists = minDists.toArray(dists);
         this.minDistances = new double[dists.length];
         for(int i = 0; i < dists.length; i++)
             this.minDistances[i] = dists[i];
+        System.out.println("Iteration created\n");
         this.findMin();
+        System.out.println("FoundMinimaDistance between " + num1 + " and " + num2 + '\n');
     }
 
     public void runIter() {
+        System.out.println("Start running iter\n");
         this.recalcClusterDistance();
         this.clustersList.get(num1).addPoints(this.clustersList.get(num2).getPoints());
         //this.recalcClusterDistance();
@@ -49,12 +52,14 @@ public class LWClusteringIteration implements Iteration{
     }
 
     private void recalcClusterDistance() {
+        System.out.println("Recalc distances to all clusters for cluster " + num1 + '\n');
         for(int i = 0; i < this.clustersList.size(); i++) {
             if((i == num1)||(i == num2))
                 continue;
 //            else if (i == num2)
 //                this.clustersList.get(num1).getDistances().re
             this.clustersList.get(num1).getDistances().set(i, this.clustersDistance.recalcClustersDistance(this.clustersList.get(num1), this.clustersList.get(num2), this.clustersList.get(i), num1, num2, i));
+
         }
     }
 
@@ -107,14 +112,16 @@ public class LWClusteringIteration implements Iteration{
         int numMin = -1;
         minDist = Double.MAX_VALUE;
         for(int i = 0; i < this.minDistances.length; i++) {
+            System.out.println("[findMin] iter" + i +":\n");
             if (this.minDistances[i] < minDist) {
                 minDist = this.minDistances[i];
                 numMin = i;
+                System.out.println("\t[findMin] current minDist= " + minDist + "\n\tnew min dist = " + this.minDistances[i] + '\n');
             }
         }
         this.minDistance = minDist;
         this.num1 = numMin;
-        this.num2 = this.clustersList.get(this.num1).getMinDistClustNum();
+        this.num2 = this.clustersList.get(numMin).getMinDistClustNum();
     }
 
 }
