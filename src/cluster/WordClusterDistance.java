@@ -1,6 +1,6 @@
 package cluster;
 
-public class LWClusterDistance implements ClustersDistance{
+public class WordClusterDistance implements ClustersDistance{
     double alphaU;
     double alphaV;
     double beta;

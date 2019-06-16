@@ -2,7 +2,7 @@ package iteration;
 
 import cluster.Cluster;
 import cluster.ClustersDistance;
-import cluster.LWClusterDistance;
+import cluster.WordClusterDistance;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,7 +16,7 @@ public class LWClusteringIteration implements Iteration{
     private int num2;
 
     public LWClusteringIteration(LinkedList<Cluster> clustersList) {
-        this.clustersDistance = new LWClusterDistance();
+        this.clustersDistance = new WordClusterDistance();
         this.clustersList = clustersList;
         Double[] dists = new Double[0];
         ArrayList<Double> minDists = new ArrayList<>();
