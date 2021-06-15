@@ -1,15 +1,14 @@
 package run;
 
-import problem.GAClusteringProblem;
 import problem.Problem;
 
 import java.io.IOException;
 import java.io.PrintStream;
 
-public class RunClusteringGA {
+public class RunClusteringLW {
     public static void main(String[] args) {
         try {
-            GAClusteringProblem clusterProblem = new GAClusteringProblem("a0.txt", new PrintStream("log.txt"));
+            Problem clusterProblem = new Problem("a0.txt", new PrintStream("log.txt"));
 
         } catch (IOException e) {
             e.getMessage();

@@ -4,13 +4,14 @@ import cluster.Cluster;
 import iteration.Iteration;
 import iteration.LWClusteringIteration;
 import metric.Metric;
+import org.w3c.dom.ls.LSOutput;
 import problem.Point;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class LWSolution {
+public class LWSolution implements Solution{
     private final PrintStream log;
     private Point[] points;
     private Cluster[] clusters;
@@ -36,7 +37,13 @@ public class LWSolution {
         return clusterDistances;
     }
 
-    private void solve() {
+
+    @Override
+    public void initializeStartSolution() {
+
+    }
+
+    public void solve() {
         this.clustersList = new LinkedList<>();
         initializeStartSolution(this.clustersList);
         this.iterationsList = new ArrayList<>();
@@ -69,8 +76,7 @@ public class LWSolution {
         log.print("}");
     }
 
-
-    private void initializeStartSolution(LinkedList<Cluster> curIterClusters) {
+    public void initializeStartSolution(LinkedList<Cluster> curIterClusters) {
         for(Point p: this.points) {
             Point[] initialPoints = new Point[1];
             initialPoints[0] = p;
@@ -84,7 +90,12 @@ public class LWSolution {
             }
         for(int i = 0; i < this.clustersList.size(); i++)
             curIterClusters.get(i).setDistances(this.clusterDistances[i], i);
-
+        System.out.println("Initialize start solution");
+//        for(int i = 0; i < this.points.length; i++)
+//            for(int j = i; j < this.points.length; j++) {
+//                System.out.println(clusterDistances[i][j]);
+//            }
+//        System.out.println();
 
     }
 

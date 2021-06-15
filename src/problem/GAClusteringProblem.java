@@ -2,21 +2,25 @@ package problem;
 
 import metric.EuclidMetric;
 import metric.Metric;
+import solution.GASolution;
 import solution.LWSolution;
-import solution.Solution;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
-public class Problem {
+public class GAClusteringProblem {
+
     private Point[] points;
     private Metric metric;
 
-    public Problem(final String pointsFile, final PrintStream log) throws IOException {
+    public GAClusteringProblem(final String pointsFile, final PrintStream log) throws IOException {
         final BufferedReader br = new BufferedReader(new FileReader(pointsFile));
         points = readPoints(pointsFile, log, br);
         this.metric = new EuclidMetric();
-        solveProblem(new LWSolution(this.points, this.metric, log), this.metric, log);
+        solveProblem(new GASolution(this.points, this.metric, log), this.metric, log);
     }
 
     private Point[] readPoints(String pointsFile, PrintStream log, BufferedReader br) throws IOException {
@@ -42,14 +46,9 @@ public class Problem {
         return points;
     }
 
-    private void solveProblem(LWSolution sol, Metric metric, PrintStream log){
+    private void solveProblem(GASolution sol, Metric metric, PrintStream log) {
+        sol.initializeStartSolution();
         sol.solve();
-//        double [][] distances = sol.getClusterDistances();
-//        for(double[] d: distances) {
-//            for (double distance : d) {
-//                log.print(distance + " ");
-//            }
-//            log.print("\n");
-//        }
     }
+
 }

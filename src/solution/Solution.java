@@ -1,7 +1,11 @@
 package solution;
 
-public interface Solution {
-    void initializeStartSolution();
+import cluster.Cluster;
 
-    void solve();
+import java.util.LinkedList;
+
+public interface Solution {
+    public void initializeStartSolution();
+
+    public void solve();
 }
