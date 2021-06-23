@@ -9,7 +9,7 @@ import java.io.PrintStream;
 public class RunClusteringGA {
     public static void main(String[] args) {
         try {
-            GAClusteringProblem clusterProblem = new GAClusteringProblem("a1.txt", new PrintStream("log.txt"));
+            GAClusteringProblem clusterProblem = new GAClusteringProblem("a300.txt", new PrintStream("log.txt"));
 
         } catch (IOException e) {
             e.getMessage();

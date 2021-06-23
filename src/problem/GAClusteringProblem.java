@@ -20,7 +20,7 @@ public class GAClusteringProblem {
         final BufferedReader br = new BufferedReader(new FileReader(pointsFile));
         points = readPoints(pointsFile, log, br);
         this.metric = new EuclidMetric();
-        solveProblem(new GASolution(this.points, this.metric, log, 20, 20, 10, 2. / points.length, 14400), this.metric, log);
+        solveProblem(new GASolution(this.points, this.metric, log, 100, 20, 3, 0.8, 2. / points.length, 180), this.metric, log);
     }
 
     private Point[] readPoints(String pointsFile, PrintStream log, BufferedReader br) throws IOException {
