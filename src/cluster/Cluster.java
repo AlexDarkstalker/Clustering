@@ -54,7 +54,7 @@ public class Cluster {
     @Override
     public String toString() {
         return "points=" + points +
-                ", distances=" + distances +
+                ", distances= " + distances +
                 '}' + '\n';
     }
 

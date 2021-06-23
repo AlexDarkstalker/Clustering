@@ -9,9 +9,11 @@ import problem.Point;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 
 public class LWSolution implements Solution{
+    private double fitnessValue;
     private final PrintStream log;
     private Point[] points;
     private Cluster[] clusters;
@@ -30,7 +32,7 @@ public class LWSolution implements Solution{
         this.points = points;
         this.metric = metric;
         this.log = log;
-        solve();
+//        solve();
     }
 
     public double[][] getClusterDistances() {
@@ -44,17 +46,59 @@ public class LWSolution implements Solution{
     }
 
     public void solve() {
+        final Date start = new Date();
+        final Date curTime = new Date();
         this.clustersList = new LinkedList<>();
         initializeStartSolution(this.clustersList);
         this.iterationsList = new ArrayList<>();
-        for(int i = 0; i < this.points.length; i++)
+        for(int i = 0; i < this.points.length - 20; i++)
         {
+            for(int j = 0; j < this.clustersList.size(); j++)
+                clustersList.get(j).setDistances(this.clusterDistances[j], j);
             this.currentIter = new LWClusteringIteration(this.clustersList);
             this.currentIter.runIter();
             this.iterationsList.add(this.currentIter);
-            this.logToFile();
-
+            recalcDistances();
         }
+        this.logToFile();
+        curTime.setTime( new Date().getTime() - start.getTime());
+        log.println( (curTime.getTime() / 1000));
+        calcFitnessValue(metric);
+        log.println("InClusterMeanDistance = " + fitnessValue);
+        log.close();
+    }
+
+    public void calcFitnessValue(Metric metric) {
+        fitnessValue = calcMeanInClusterDistance(metric);
+    }
+
+    private double calcMeanInClusterDistance(Metric metric) {
+        double sumDistanceInCluster = 0, clusterResult = 0;
+        int numCluster = 0;
+        for (Cluster cluster: clustersList ) {
+            sumDistanceInCluster = 0;
+            if (cluster.getPoints().size() != 0) {
+                for (int i = 0; i < cluster.getPoints().size(); ++i) {
+                    for (int j = i + 1; j < cluster.getPoints().size(); ++j)
+                        sumDistanceInCluster += metric.getDistance(cluster.getPoints().get(i), cluster.getPoints().get(j));
+                }
+//                log.println("Cluster # " + numCluster + " = " + getString(pointsInCluster));
+//                log.println("MeanDist cluster # " + numCluster + " = " + (sumDistanceInCluster / pointsInCluster.size()) + " ");
+                clusterResult += sumDistanceInCluster / cluster.getPoints().size();
+            }
+            numCluster++;
+        }
+        return  clusterResult;
+    }
+
+    private void recalcDistances() {
+        this.clusterDistances = null;
+        this.clusterDistances = new double[this.clustersList.size()][this.clustersList.size()];
+        for(int i = 0; i < this.clustersList.size(); i++)
+            for(int j = i; j < this.clustersList.size(); j++) {
+                clusterDistances[i][j] = this.clustersList.get(i).getDistances().get(j);
+                clusterDistances[j][i] = clusterDistances[i][j];
+            }
     }
 
     private void logToFile() {

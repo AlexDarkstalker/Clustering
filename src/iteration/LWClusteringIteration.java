@@ -32,18 +32,23 @@ public class LWClusteringIteration implements Iteration{
     }
 
     public void runIter() {
+//        this.findMin();
+//        System.out.println("FoundMinimaDistance between " + num1 + " and " + num2 + '\n');
         System.out.println("Start running iter\n");
-        this.recalcClusterDistance();
+//        this.recalcClusterDistance();
         this.clustersList.get(num1).addPoints(this.clustersList.get(num2).getPoints());
-        //this.recalcClusterDistance();
+        this.recalcClusterDistance();
         this.recalcDistanceToCluster();
         this.kickElem(num2);
         this.nullDistanceToCluster(num2);
     }
 
     private void nullDistanceToCluster(int num2) {
-        for(Cluster cluster: this.clustersList)
-            cluster.setDistance(num2, 0.);
+//        for(Cluster cluster: this.clustersList)
+//            cluster.setDistance(num2, 0.);
+        for(Cluster cluster: clustersList) {
+            cluster.getDistances().remove(num2);
+        }
     }
 
     private void recalcDistanceToCluster() {
@@ -52,7 +57,7 @@ public class LWClusteringIteration implements Iteration{
     }
 
     private void recalcClusterDistance() {
-        System.out.println("Recalc distances to all clusters for cluster " + num1 + '\n');
+//        System.out.println("Recalc distances to all clusters for cluster " + num1 + '\n');
         for(int i = 0; i < this.clustersList.size(); i++) {
             if((i == num1)||(i == num2))
                 continue;
@@ -112,11 +117,11 @@ public class LWClusteringIteration implements Iteration{
         int numMin = -1;
         minDist = Double.MAX_VALUE;
         for(int i = 0; i < this.minDistances.length; i++) {
-            System.out.println("[findMin] iter" + i +":\n");
+//            System.out.println("[findMin] cluster" + i +":\n");
             if (this.minDistances[i] < minDist) {
                 minDist = this.minDistances[i];
                 numMin = i;
-                System.out.println("\t[findMin] current minDist= " + minDist + "\n\tnew min dist = " + this.minDistances[i] + '\n');
+//                System.out.println("\t[findMin] current minDist= " + minDist + " to cluster " + numMin + "\n\tnew min dist = " + this.minDistances[i] + '\n');
             }
         }
         this.minDistance = minDist;
